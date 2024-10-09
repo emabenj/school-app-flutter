@@ -13,7 +13,7 @@ class BFormatter {
       return dateString == null ? null : DateTime.parse(dateString);
     } catch (e) {
       if (e is FormatException) {
-        print("FORMATEADO DE FECHA");
+        // print("FORMATEADO DE FECHA");
       }
       throw Exception("FORMATEADO DE FECHA");
     }
