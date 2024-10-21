@@ -33,14 +33,15 @@ class MessageModel {
   }
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
-        id: json["id"],
-        conversation: json["conversacion"],
-        transmitter: json["emisor"],
-        receiver: json["receptor"],
-        content: json["contenido"],
-        imagenes: ImagenConversationListModel.fromJson(json["imagenes"]).list(),
-        date: BFormatter.formatStringToDate(json["fecha_envio"]),
-      );
+          id: json["id"],
+          conversation: json["conversacion"],
+          transmitter: json["emisor"],
+          receiver: json["receptor"],
+          content: json["contenido"],
+          imagenes:
+              ImagenConversationListModel.fromJson(json["imagenes"]).list(),
+          date: BFormatter.formatStringToDate(json["fecha_creacion"]),
+        );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -49,7 +50,7 @@ class MessageModel {
         "receptor": receiver,
         "contenido": content,
         "imagenes": ImagenConversationListModel(imagenes: imagenes).toJson(),
-        "fecha_envio": BFormatter.formatDateToString(date, normal: true),
+        "fecha_creacion": BFormatter.formatDateToString(date, normal: true),
       };
 }
 

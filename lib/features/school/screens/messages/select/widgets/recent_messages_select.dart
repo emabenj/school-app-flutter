@@ -15,8 +15,7 @@ class RecentMessages extends StatelessWidget {
   Widget build(BuildContext context) {
     final backgroundColorItem =
         BHelperFunctions.isDarkMode(context) ? BColors.grey : BColors.white;
-    final controller = SelectChatController.instance;
-    return Obx(() => controller.isSending()
+    return Obx(() => SelectChatController.instance.isSending()
         ? SendingContainer(backgroundColor: backgroundColorItem, update: onTap)
         : RecentListContainer(backgroundColor: backgroundColorItem, forT: forT));
   }

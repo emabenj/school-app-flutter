@@ -5,10 +5,11 @@ class StudentRegisterModel {
   final int id;
   final String name;
   final String lastname;
-  String get fullName => BFormatter.formatName(name, lastname, separated: false);
   final String dni;
   // final int? gender;
   // final int? room;
+  
+  String get fullName => BFormatter.formatName(name, lastname, separated: false);
   StudentRegisterModel({
     required this.id,
     required this.name,

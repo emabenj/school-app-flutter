@@ -1,5 +1,5 @@
 class CategoryModel {
-  static get url => "categorias/";
+  static String get url => "categorias/";
   final int id;
   final String name;
 

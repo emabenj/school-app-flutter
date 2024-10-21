@@ -11,11 +11,11 @@ import 'package:image_picker/image_picker.dart';
 class MessagesService {
   static String schoolUrl = APIConstants.schoolUrl;
 
-  final authRepository = AuthenticationRepository.instance;
+  final _authRepository = AuthenticationRepository.instance;
 
   Future<List<dynamic>> getList(String url) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
       final urlList = "$schoolUrl$url";
       final response =
           await BHttpHelper.get(urlList, token: token, isList: true);
@@ -32,8 +32,8 @@ class MessagesService {
   }
 
   Future<dynamic> getModel(String url) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
       final urlList = "$schoolUrl$url";
       final response = await BHttpHelper.get(urlList, token: token);
       if (response.containsKey('message')) {
@@ -47,8 +47,8 @@ class MessagesService {
 
   Future<List<MessageModel>> sendMessage(MessageSendModel message,
       {XFile? img}) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
       final urlSend = "$schoolUrl${MessageModel.urlList}";
       final response = await BHttpHelper.post(urlSend, message.toJson(),
           token: token, img: img, isList: true);

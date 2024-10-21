@@ -26,8 +26,9 @@ class _NewsBoardHomeState extends State<NewsBoardHome> {
   }
 
   Future<void> loadData() async {
+    final itemController = ItemListController.instance;
     // GET News
-    final items = await ItemListController.instance.getNews();
+    final items = await itemController.getNews();
     items.sort((a, b) => b.dateTime!.compareTo(a.dateTime!));
 
     controller.setModels(items);
@@ -35,8 +36,8 @@ class _NewsBoardHomeState extends State<NewsBoardHome> {
     if (navController.teacherOrAuthorised()) {
       // INSTANCE SelectController
       final selectController = Get.put(SelectController());
-      await ItemListController.instance.getAttendanceStatus();
-      await ItemListController.instance.getHomeworkStatus();
+      await itemController.getAttendanceStatus();
+      await itemController.getHomeworkStatus();
       // CARGAR aulas o estudiantes (solo Apoderado o Docente)
       await selectController.loadData();
     }

@@ -18,6 +18,8 @@ class ItemListController extends GetxController {
   static ItemListController get instance => Get.find();
   // VARIABLES
 
+  final _schoolService = SchoolService();
+
   final _categories = Rx<List<dynamic>>([]);
   final _genders = Rx<List<dynamic>>([]);
   final _levels = Rx<List<dynamic>>([]);
@@ -33,8 +35,6 @@ class ItemListController extends GetxController {
   final _courses = Rx<Map<int, List<CourseModel>>>({});
   final _news = Rx<List<dynamic>>([]);
 
-  final _schoolService = SchoolService();
-
   final _urls = [
     CategoryModel.url,
     GenderModel.url,
@@ -45,15 +45,15 @@ class ItemListController extends GetxController {
   ];
 
   Future<void> _getList(String url) async {
+    final lists = [
+      _categories,
+      _genders,
+      _levels,
+      _news,
+      _attendanceStatus,
+      _homeworkStatus
+    ];
     try {
-      final lists = [
-        _categories,
-        _genders,
-        _levels,
-        _news,
-        _attendanceStatus,
-        _homeworkStatus
-      ];
       final typeIndex = _urls.indexOf(url);
       bool isEmpty = lists[typeIndex].value.isEmpty;
       if (isEmpty) {
@@ -81,7 +81,7 @@ class ItemListController extends GetxController {
               }
               _courses.value[course.levelId]!.add(course);
             }
-            // ESTABLECER CourseMapper
+            // SET CourseMapper
             course.value = CourseEnumMapper(valuesCourse);
           }
         }
@@ -90,33 +90,6 @@ class ItemListController extends GetxController {
       BLoaders.errorSnackBar(title: "Error", message: e.toString());
     }
   }
-
-  // CATEGORIES
-
-  // List<CategoryModel> getCategories() {
-  //   return _categories.value as List<CategoryModel>;
-  // }
-
-  // CategoryModel getCategory(int id) {
-  //   return getCategories().firstWhereOrNull((cat) => cat.id == id) ??
-  //       CategoryModel.empty();
-  // }
-
-  // int getCategoryIndex(int id) {
-  //   final categoryList = getCategories();
-  //   return categoryList.indexWhere((cat) => cat.id == id);
-  // }
-
-  // GENDERS
-
-  // List<GenderModel> getGenders() {
-  //   return _genders.value as List<GenderModel>;
-  // }
-
-  // String getGenderImage(int id) {
-  //   final index = _genders.value.indexWhere((gender) => gender.id == id);
-  //   return _gendersImages[index];
-  // }
 
   // LEVELS
 
@@ -132,12 +105,6 @@ class ItemListController extends GetxController {
     return _news.value as List<NewModel>;
   }
 
-  // COURSES
-
-  // List<CourseModel> getCourses(int level) {
-  //   return _courses.value[level] ?? [];
-  // }
-
   // ATTENDANCE
 
   Future<void> getAttendanceStatus() async {
@@ -151,53 +118,4 @@ class ItemListController extends GetxController {
     await _getList(HomeworkStatusModel.url);
     homework.value = HomeworkEnumMapper(_homeworkStatus.value);
   }
-
-  // List<AttendanceStatusModel> listAttendanceStatus() {
-  //   return attendance.value as List<AttendanceStatusModel>;
-  // }
-
-  // List<AttendanceStatusModel> listAttendanceToSelect() {
-  //   final statusList = listAttendanceStatus();
-  //   final statusToSelect = statusList.sublist(0, statusList.length - 1);
-  //   return statusToSelect;
-  // }
-
-  // AttendanceStatusModel getAttendanceStatusModel(int id) {
-  //   return listAttendanceStatus()
-  //           .firstWhereOrNull((status) => status.id == id) ??
-  //       AttendanceStatusModel.empty();
-  // }
-
-  // bool isRetired(int id) {
-  //   return getAttendanceStatusIdByEnum(AttendanceStatus.retirated) == id;
-  // }
-
-  // int getAttendanceStatusIdByEnum(AttendanceStatus status) {
-  //   final index = AttendanceStatus.values.indexOf(status);
-  //   return listAttendanceStatus()[index].id;
-  // }
-
-  // List<HomeworkStatusModel> listHomeworkStatus() {
-  //   return homework.value as List<HomeworkStatusModel>;
-  // }
-
-  // List<HomeworkStatusModel> listHomeworkToSelect() {
-  //   final statusList = listHomeworkStatus();
-  //   final statusToSelect = statusList.sublist(0, statusList.length - 1);
-  //   return statusToSelect;
-  // }
-
-  // HomeworkStatusModel getHomeworkStatusModel(int id) {
-  //   return listHomeworkStatus().firstWhereOrNull((status) => status.id == id) ??
-  //       HomeworkStatusModel.empty();
-  // }
-
-  // bool isRetired(int id) {
-  //   return getHomeworkStatusIdByEnum(HomeworkStatus.retirated) == id;
-  // }
-
-  // int getHomeworkStatusIdByEnum(HomeworkStatus status) {
-  //   final index = HomeworkStatus.values.indexOf(status);
-  //   return listHomeworkStatus()[index].id;
-  // }
 }

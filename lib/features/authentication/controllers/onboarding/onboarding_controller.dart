@@ -1,4 +1,5 @@
 import "package:colegio_bnnm/features/authentication/screens/login/login_screen.dart";
+import "package:colegio_bnnm/util/constants/text_strings.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:get_storage/get_storage.dart";
@@ -22,7 +23,7 @@ class OnBoardingController extends GetxController {
   void nextPage() {
     if (currentPageIndex.value == 2) {
       final storage = GetStorage();
-      storage.write("isFirstTime", false);
+      storage.write(BTexts.keyFirstTime, false);
       Get.to(() => const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;

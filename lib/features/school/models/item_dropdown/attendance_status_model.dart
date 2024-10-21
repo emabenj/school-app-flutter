@@ -2,7 +2,7 @@ import 'package:colegio_bnnm/util/formatters/formatter.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceStatusModel {
-  static get url => "estados/asistencia/";
+  static String get url => "estados/asistencia/";
   final int id;
   final String name;
   final Color color;

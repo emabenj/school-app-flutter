@@ -14,7 +14,7 @@ import 'package:colegio_bnnm/features/school/models/qualifications/qualification
 import 'package:colegio_bnnm/features/school/models/register_account/authorised_register_model.dart';
 import 'package:colegio_bnnm/features/school/models/register_account/student_register_model.dart';
 import 'package:colegio_bnnm/features/school/models/register_account/teacher_register_model.dart';
-import 'package:colegio_bnnm/features/school/models/select/classroom_model.dart';
+import 'package:colegio_bnnm/features/school/models/select/teacher_classroom_model.dart';
 import 'package:colegio_bnnm/features/school/models/select/student_room_model.dart';
 import 'package:colegio_bnnm/util/constants/enums.dart';
 import 'package:get/get.dart';
@@ -102,17 +102,17 @@ class SchoolRepository extends GetxController {
   //
   // TEACHER
   //
-  Future<List<ClassroomModel>> getClassroomsByTeacherId() async {
+  Future<List<TeacherClassroomModel>> getClassroomsByTeacherId() async {
     final teacherId = _authRepository.currentUser()!.user.id;
-    final urlList = "${ClassroomModel.urlList}$teacherId/";
+    final urlList = "${TeacherClassroomModel.urlList}$teacherId/";
     final classrooms =
-        await _school.getList(urlList, withToken: true) as List<ClassroomModel>;
+        await _school.getList(urlList, withToken: true) as List<TeacherClassroomModel>;
     return classrooms;
   }
 
   Future<List<AttendanceModel>> getAttendancesByClassroomId(
       int classroomId) async {
-    final urlList = "${AttendanceModel.urlList}$classroomId";
+    final urlList = "${AttendanceModel.urlList}$classroomId/";
     final attendances = await _school.getList(urlList, withToken: true)
         as List<AttendanceModel>;
     return attendances;

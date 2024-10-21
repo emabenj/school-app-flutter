@@ -73,9 +73,6 @@ class BColors {
     Color(0xff655f68)
   ];
 
-  // static courses(Courses course) =>
-  //     coursesColors[Courses.values.indexOf(course)];
-
   // ROLE COLORS
   static final _roleColors = [greenDark, grey, redLight, Colors.orange];
   

@@ -3,7 +3,7 @@ import 'package:colegio_bnnm/data/repositories/school/school_repository.dart';
 import 'package:colegio_bnnm/features/school/controllers/home/navigation_controller.dart';
 import 'package:colegio_bnnm/features/school/controllers/messages/select/online_users_controller.dart';
 import 'package:colegio_bnnm/features/school/models/messages/select/group_online_model.dart';
-import 'package:colegio_bnnm/features/school/models/select/classroom_model.dart';
+import 'package:colegio_bnnm/features/school/models/select/teacher_classroom_model.dart';
 import 'package:colegio_bnnm/features/school/models/select/select_model.dart';
 import 'package:colegio_bnnm/features/school/models/select/student_room_model.dart';
 import 'package:colegio_bnnm/util/constants/enums.dart';
@@ -19,18 +19,27 @@ class SelectController extends GetxController {
   final counterSelect = 2.obs;
 
   Future<void> loadData() async {
+    final roomsIds = <int>[];
     await AuthenticationRepository.instance.responseValidatorControllers(
         () async {
       if (navController.isTeacher()) {
+        //
         // CLASSROOMS
+        //
         listClassrooms.value =
             await SchoolRepository.instance.getClassroomsByTeacherId();
+        // INSERT IDS
+        roomsIds.addAll(listClassrooms.map((c) => c.classroom.id));
         // CLASSROOMS TO SELECT
         listToSelect.value = listClassrooms.map((e) => e.select()).toList();
-        // STUDENTS
       } else if (navController.isAuthorised()) {
+        //
+        // STUDENTS
+        //
         listStudents.value =
             await SchoolRepository.instance.getStudentsByAuthorisedId();
+        // INSERT IDS
+        roomsIds.addAll(listStudents.map((c) => c.classroom.id));
         // STUDENTS TO SELECT
         listToSelect.value = listStudents.map((e) => e.select()).toList();
       }
@@ -38,12 +47,14 @@ class SelectController extends GetxController {
         back: true,
         titleMessage:
             "Error al obtener información de ${navController.isTeacher() ? 'las aulas' : 'los estudiantes'}");
+
     // Obtener usuarios conectados
-    onlineUsersController.connectWebSocket();
+    onlineUsersController.roomsIds = roomsIds;
+    onlineUsersController.connectSockets();
   }
 
   // LISTS OF TEACHER (classrooms)
-  final listClassrooms = <ClassroomModel>[].obs;
+  final listClassrooms = <TeacherClassroomModel>[].obs;
   // LIST STUDENTS (from Room, from Authorised)
   final listStudents = <StudentRoomModel>[].obs;
   // LIST OF ITEMS TO SELECT (Rooms, Students)
@@ -94,7 +105,7 @@ class SelectController extends GetxController {
 
   void setUsersOnline(List<GroupOnlineModel> groups, bool forT) {
     final onlineTotal = groups.isNotEmpty
-        ? groups.map((e) => e.group.length).toList()
+        ? groups.map((e) => e.usersOnline.length).toList()
         : List.generate(models.length, (index) => 0);
     final totalList = forT
         ? listClassrooms.map((room) => room.parentsTotal).toList()

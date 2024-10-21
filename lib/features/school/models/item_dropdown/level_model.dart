@@ -1,5 +1,5 @@
 class LevelModel {
-  static get url => "niveles/";
+  static String get url => "niveles/";
   final int id;
   final String name;
 

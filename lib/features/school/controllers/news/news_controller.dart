@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class NewsController extends GetxController {
   static NewsController get instance => Get.find();
+  final _schoolRepository = SchoolRepository.instance;
   //VARIABLES
   final RxBool forA = false.obs;
   final model = NewModel.empty().obs;
@@ -60,7 +61,7 @@ class NewsController extends GetxController {
     await AuthenticationRepository.instance.responseValidatorControllers(
         () async {
       if (isRemoving()) {
-        await SchoolRepository.instance.deleteNew(model.value.id);
+        await _schoolRepository.deleteNew(model.value.id);
         news.removeAt(index);
       }
     }, titleMessage: "Error al eliminar la noticia");
@@ -88,14 +89,14 @@ class NewsController extends GetxController {
       final imgNew = imgController.text.isEmpty ? null : imgController.text;
       final adminNew = model.value.admin;
       if (isEditing()) {
-        final newUpdated = await SchoolRepository.instance.editNew(idNew,
-            titleNew, descriptionNew, categoryNew, adminNew, imgNew, imgFile);
+        final newUpdated = await _schoolRepository.editNew(idNew, titleNew,
+            descriptionNew, categoryNew, adminNew, imgNew, imgFile);
         final indexEdit = news.indexWhere((new_) => new_.id == model.value.id);
         news[indexEdit] = newUpdated;
         messageResponse = "Noticia actualizada";
       } else {
-        final newUpdated = await SchoolRepository.instance
-            .addNew(titleNew, descriptionNew, categoryNew, imgFile);
+        final newUpdated = await _schoolRepository.addNew(
+            titleNew, descriptionNew, categoryNew, imgFile);
         news.insert(0, newUpdated);
         messageResponse = "Noticia agregada";
       }

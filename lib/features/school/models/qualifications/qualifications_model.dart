@@ -27,19 +27,19 @@ class QualificationsModel {
   factory QualificationsModel.fromJson(Map<String, dynamic> json) =>
       QualificationsModel(
         id: json["id"],
-        qualification1: double.parse(json["calificacion1"]),
-        qualification2: double.parse(json["calificacion2"]),
-        qualification3: double.parse(json["calificacion3"]),
-        qualification4: double.parse(json["calificacion4"]),
+        qualification1: double.parse(json["calificacion_1"]),
+        qualification2: double.parse(json["calificacion_2"]),
+        qualification3: double.parse(json["calificacion_3"]),
+        qualification4: double.parse(json["calificacion_4"]),
         average: double.parse(json["promedio"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "calificacion1": qualification1,
-        "calificacion2": qualification2,
-        "calificacion3": qualification3,
-        "calificacion4": qualification4,
+        "calificacion_1": qualification1,
+        "calificacion_2": qualification2,
+        "calificacion_3": qualification3,
+        "calificacion_4": qualification4,
         "promedio": average,
       };
 }

@@ -11,7 +11,6 @@ class CrudButtonsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeworkController.instance;
     final imgs = BImages.crudHomework.sublist(1);
     return ContainerIconButtons(
         padding: 0.0,
@@ -21,7 +20,7 @@ class CrudButtonsItem extends StatelessWidget {
         functions: List.generate(
         imgs.length,
         (i) => () {
-              controller.changeState(Crud.values[i + 1], modelIndex: index);
+              HomeworkController.instance.changeState(Crud.values[i + 1], modelIndex: index);
             }),
         color: Colors.transparent,
         row: false);

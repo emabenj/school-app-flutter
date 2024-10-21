@@ -15,8 +15,8 @@ class LoginController extends GetxController {
   static LoginController get instance => Get.find();
   final _authRep = AuthenticationRepository.instance;
   // VARIABLES
-  final emailController = TextEditingController(text: "docente@hotmail.com");
-  final passwordController = TextEditingController(text: r"uUgjThiCQ9");
+  final emailController = TextEditingController(text: "emabenj_22@hotmail.com");
+  final passwordController = TextEditingController(text: r"F6nallyshit7$");
 
   final keepSession = false.obs;
   final showPass = false.obs;

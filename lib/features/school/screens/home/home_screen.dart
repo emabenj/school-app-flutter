@@ -53,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (controller.teacherOrAuthorised()) {
       final selectController = SelectController.instance;
       if (state == AppLifecycleState.paused) {
-        selectController.onlineUsersController.channel.sink.close();
+        selectController.onlineUsersController.disconnectSockets();
       } else if (state == AppLifecycleState.resumed) {
-        selectController.onlineUsersController.connectWebSocket();
+        selectController.onlineUsersController.connectSockets();
       }
     }
   }

@@ -17,14 +17,14 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final controller = ChatController.instance;
-  final onlineController = OnlineUserController.instance;
+    final controller = ChatController.instance;
+    final onlineController = OnlineUserController.instance;
     // Cargar mensajes y establecer conexión WebSocket
     controller.loadMessages();
     return PopScope(
       onPopInvoked: (didPop) {
         controller.updateRecentMessage();
-        controller.channel.sink.close();
+        onlineController.idUserChat = null;
       },
       child: Obx(() {
         final name = onlineController.nameUserChat;

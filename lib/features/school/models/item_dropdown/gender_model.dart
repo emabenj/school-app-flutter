@@ -1,5 +1,5 @@
 class GenderModel {
-  static get url => "generos/";
+  static String get url => "generos/";
   final int id;
   final String name;
 

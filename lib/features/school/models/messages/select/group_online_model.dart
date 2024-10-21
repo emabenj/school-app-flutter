@@ -2,32 +2,26 @@ import 'package:colegio_bnnm/features/school/models/messages/select/user_online_
 import 'package:get/get.dart';
 
 class GroupOnlineModel {
-  final int id;
-  final List<UserOnlineModel> group;
-  GroupOnlineModel({required this.id, required this.group});
+  final int roomId;
+  final List<UserOnlineModel> usersOnline;
+  GroupOnlineModel({required this.roomId, required this.usersOnline});
 
   factory GroupOnlineModel.fromJson(Map<String, dynamic> json) =>
       GroupOnlineModel(
-        id: json.containsKey("aula") ? json["aula"] : json["estudiante"],
-        group: json.containsKey("apoderados")
+        roomId: json.containsKey("aula") ? json["aula"] : json["estudiante"],
+        usersOnline: json.containsKey("apoderados")
             ? UserOnlineListModel.fromJson(json["apoderados"]).list()
             : UserOnlineListModel.fromJson(json["docentes"]).list(),
       );
 
-  // Método para agregar un usuario si su ID está en groupsIds
-  void addUserIfInGroupsIds(int userId, List<int> groupsIds) {
-    if (groupsIds.contains(id)) {
-      group.addIf(
-          group.firstWhereOrNull((u) => u.id == userId) == null,
+  void addUserConnected(int userId) {
+      usersOnline.addIf(
+          usersOnline.firstWhereOrNull((u) => u.id == userId) == null,
           UserOnlineModel(id: userId));
-    }
   }
 
-  // Método para agregar un usuario si su ID está en groupsIds
-  void removeUserIfInGroupsIds(int userId, List<int> groupsIds) {
-    if (groupsIds.contains(id)) {
-      group.removeWhere((user) => user.id == userId);
-    }
+  void removeUserDisconnected(int userId) {
+      usersOnline.removeWhere((user) => user.id == userId);
   }
 }
 

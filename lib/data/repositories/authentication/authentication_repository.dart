@@ -95,7 +95,8 @@ class AuthenticationRepository extends GetxController {
       } else if (e is BApiAuthException) {
         throw BApiAuthException(e.message);
       }
-      BLoaders.warningSnackBar(title: BTexts.noServerConnectionTitle, message: messageError);
+      BLoaders.warningSnackBar(
+          title: BTexts.noServerConnectionTitle, message: messageError);
       if (!verifyInternet) {
         throw Exception(null);
       }
@@ -132,7 +133,7 @@ class AuthenticationRepository extends GetxController {
       if ("$e".contains("Refresh token")) {
         final tryAgain = await refreshAccessToken();
         if (tryAgain) {
-          return await responseValidatorServices(() async => response);
+          return await responseValidatorServices(response);
         } else {
           throw BApiAuthException(BTexts.sessionClosed);
         }
@@ -152,6 +153,7 @@ class AuthenticationRepository extends GetxController {
       if (!isConnected) return;
       await response();
     } catch (e) {
+      print("$e");
       // If the loading screen has been set
       if (fullScreenLoader) BFullScreenLoader.stopLoading();
       String messageError = "$e";

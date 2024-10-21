@@ -1,5 +1,5 @@
 class HomeworkStatusModel {
-  static get url => "estados/tarea/";
+  static String get url => "estados/tarea/";
   final int id;
   final String name;
 

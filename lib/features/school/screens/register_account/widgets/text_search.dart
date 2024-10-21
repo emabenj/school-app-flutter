@@ -12,13 +12,6 @@ class TextSearch extends StatefulWidget {
 class _TextSearchState extends State<TextSearch> {
   final controller = RegisterController.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    // controller.dniController.addListener(() {
-    //   _filterStudents();
-    // });
-  }
 
   Future<void> _filterStudents() async {
     final dni = controller.dniController.text.trim();

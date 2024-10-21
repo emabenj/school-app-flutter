@@ -13,15 +13,17 @@ class ImagenMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool hasImgs = imagenes.isNotEmpty;
-    const url = APIConstants.url;
-    final urlImg = hasImgs ? url + imagenes[0].link : "";
-    return hasImgs
-        ? SizedBox(
-            width: BHelperFunctions.screenWidth() * .5,
-            child: BorderedContainerImage(
-                radius: BRadiusStyles.all,
-                img: ImageWithLottiePlaceholder(imageUrl: urlImg)),
-          )
-        : const SizedBox();
+    if (hasImgs) {
+      const url = APIConstants.url;
+      final urlImg = hasImgs ? url + imagenes[0].link : "";
+      return SizedBox(
+        width: BHelperFunctions.screenWidth() * .5,
+        child: BorderedContainerImage(
+            radius: BRadiusStyles.all,
+            img: ImageWithLottiePlaceholder(imageUrl: urlImg)),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

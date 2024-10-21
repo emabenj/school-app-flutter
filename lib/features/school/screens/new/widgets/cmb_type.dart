@@ -15,7 +15,6 @@ class CmbCategorie extends StatefulWidget {
 }
 
 class _CmbCategorieState extends State<CmbCategorie> {
-  final controller = NewsController.instance;
   late List<CategoryModel> categories;
 
   @override
@@ -39,7 +38,7 @@ class _CmbCategorieState extends State<CmbCategorie> {
           onChanged: (newValue) {
             setState(() {
               index = newValue;
-              controller.indexCategory.value = newValue ?? 0;
+              NewsController.instance.indexCategory.value = newValue ?? 0;
             });
           },
           items: List.generate(

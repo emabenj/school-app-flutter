@@ -27,7 +27,8 @@ class QualificationsController extends GetxController {
   ]);
 
   Future<void> searchQualifications() async {
-    await AuthenticationRepository.instance.responseValidatorControllers(() async {
+    await AuthenticationRepository.instance.responseValidatorControllers(
+        () async {
       model.value =
           await SchoolRepository.instance.getQualifications(studentId);
 
@@ -77,7 +78,8 @@ class QualificationsController extends GetxController {
   }
 
   Future<void> saveChanges() async {
-    await AuthenticationRepository.instance.responseValidatorControllers(() async {
+    await AuthenticationRepository.instance.responseValidatorControllers(
+        () async {
       // START LOADING
       BFullScreenLoader.openLoadingDialog(
           'Guardando notas', BImages.loadingQualifications);

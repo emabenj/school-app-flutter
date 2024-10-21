@@ -1,4 +1,5 @@
 import 'package:colegio_bnnm/features/school/models/messages/select/teacher_item_model.dart';
+import 'package:colegio_bnnm/features/school/models/select/classroom_model.dart';
 import 'package:colegio_bnnm/features/school/models/select/select_model.dart';
 import 'package:colegio_bnnm/util/formatters/formatter.dart';
 
@@ -8,7 +9,7 @@ class StudentRoomModel {
   final String name;
   final String lastname;
   final int gender;
-  final String classroom;
+  final ClassroomModel classroom;
   final List<TeacherItemModel> teachers;
 
   String reducedName() => BFormatter.reduceName("$name $lastname");
@@ -27,11 +28,11 @@ class StudentRoomModel {
         name: json["nombres"],
         lastname: json["apellidos"],
         gender: json["genero"],
-        classroom: json["aula_info"],
+        classroom: ClassroomModel.fromJson(json["aula"]),
         teachers: TeacherItemListModel.fromJson(json["docentes"]).list(),
       );
   SelectModel select() =>
-      SelectModel(title: reducedName(), subTitle: classroom, stateUsers: "");
+      SelectModel(title: reducedName(), subTitle: classroom.getRoom(), stateUsers: "");
 }
 
 class StudentRoomListModel {

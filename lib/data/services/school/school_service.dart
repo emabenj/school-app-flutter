@@ -11,7 +11,7 @@ import 'package:colegio_bnnm/features/school/models/new/new_model.dart';
 import 'package:colegio_bnnm/features/school/models/qualifications/qualifications_model.dart';
 import 'package:colegio_bnnm/features/school/models/register_account/course_model.dart';
 import 'package:colegio_bnnm/features/school/models/register_account/student_register_model.dart';
-import 'package:colegio_bnnm/features/school/models/select/classroom_model.dart';
+import 'package:colegio_bnnm/features/school/models/select/teacher_classroom_model.dart';
 import 'package:colegio_bnnm/features/school/models/select/student_room_model.dart';
 import 'package:colegio_bnnm/util/constants/api_constants.dart';
 import 'package:colegio_bnnm/util/http/http_client.dart';
@@ -20,13 +20,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SchoolService {
-  static String schoolUrl = APIConstants.schoolUrl;
-  final authRepository = AuthenticationRepository.instance;
+  static const String _schoolUrl = APIConstants.schoolUrl;
+  final _authRepository = AuthenticationRepository.instance;
 
   Future<List<dynamic>> getList(String url, {bool withToken = false}) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = withToken ? authRepository.token() : "";
-      final urlList = "$schoolUrl$url";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = withToken ? _authRepository.token() : "";
+      final urlList = "$_schoolUrl$url";
       final response =
           await BHttpHelper.get(urlList, token: token, isList: true);
       if (url == CategoryModel.url) {
@@ -48,7 +48,7 @@ class SchoolService {
         //
       } else if (url.contains(AttendanceModel.urlList)) {
         return AttendanceListModel.fromJson(response).list();
-      } else if (url.contains(ClassroomModel.urlList)) {
+      } else if (url.contains(TeacherClassroomModel.urlList)) {
         return ClassroomListModel.fromJson(response).list();
       } else if (url.contains(StudentRoomModel.urlList)) {
         return StudentRoomListModel.fromJson(response).list();
@@ -62,12 +62,12 @@ class SchoolService {
 
   Future<NewModel> getNewById(int id) async {
     final deviceStorage = GetStorage();
-    final userId = authRepository.userId();
+    final userId = _authRepository.userId();
     final key = "new-$id-user-$userId";
     deviceStorage.writeIfNull(key, true);
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final nameUrl = "$schoolUrl${NewModel.url}$id/";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final nameUrl = "$_schoolUrl${NewModel.url}$id/";
       final response = await BHttpHelper.get(nameUrl, token: token);
       return NewModel.fromJson(response);
     });
@@ -76,22 +76,22 @@ class SchoolService {
   // HomeworkStatusModel.url,
   //41561651
   Future<StudentRegisterModel> getStudentByDni(String dni) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final nameUrl = "$schoolUrl${StudentRegisterModel.url}?dni=$dni";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final nameUrl = "$_schoolUrl${StudentRegisterModel.url}?dni=$dni";
       final response = await BHttpHelper.get(nameUrl, token: token);
       return StudentRegisterModel.fromJson(response);
     });
   }
 
   Future<QualificationsModel> getStudentQualifications(int studentId) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
       if (NavigationController.instance.isTeacher()) {
         // OBTENER el id del curso del docente authenticado
-        final courseId = authRepository.currentUser()!.user.course.id;
+        final courseId = _authRepository.currentUser()!.user.course.id;
         final nameUrl =
-            "$schoolUrl${QualificationsModel.url}?curso=$courseId&estudiante=$studentId";
+            "$_schoolUrl${QualificationsModel.url}?curso=$courseId&estudiante=$studentId";
         final response = await BHttpHelper.get(nameUrl, token: token);
         return QualificationsModel.fromJson(response);
       } else {
@@ -102,9 +102,9 @@ class SchoolService {
   }
 
   Future<dynamic> addModel(String url, dynamic model, {XFile? img}) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final urlInsert = "$schoolUrl$url";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final urlInsert = "$_schoolUrl$url";
       final response =
           await BHttpHelper.post(urlInsert, model, token: token, img: img);
       if (response.containsKey('message')) {
@@ -120,9 +120,9 @@ class SchoolService {
 
   Future<dynamic> editModel(String url, int id, dynamic model,
       {XFile? img}) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final urlEdit = "$schoolUrl$url$id/";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final urlEdit = "$_schoolUrl$url$id/";
       final response = await BHttpHelper.patch(urlEdit, model, token: token);
       if (response.containsKey('message')) {
         final message = MessageResponseModel.fromJson(response).message;
@@ -136,9 +136,9 @@ class SchoolService {
   }
 
   Future<dynamic> editModels(String url, int id, List<dynamic> models) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final urlEdit = "$schoolUrl$url$id/";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final urlEdit = "$_schoolUrl$url$id/";
       final response = await BHttpHelper.patch(urlEdit, models,
           token: token); // CHANGE MAYBE
       if (response.containsKey('message')) {
@@ -152,17 +152,17 @@ class SchoolService {
   }
 
   Future<dynamic> deleteModel(String url, int id) async {
-    return await authRepository.responseValidatorServices(() async {
-      final token = authRepository.token();
-      final urlDelete = "$schoolUrl$url$id/";
+    return await _authRepository.responseValidatorServices(() async {
+      final token = _authRepository.token();
+      final urlDelete = "$_schoolUrl$url$id/";
       await BHttpHelper.delete(urlDelete, token: token);
     });
   }
 
   Future<String> registerAccount(dynamic model, String url) async {
-    return await authRepository.responseValidatorServices(() async {
+    return await _authRepository.responseValidatorServices(() async {
       //TOKEN
-      final token = authRepository.token();
+      final token = _authRepository.token();
       // URL
       final urlRegister = "registro/$url";
       final response = await BHttpHelper.post(urlRegister, model, token: token);

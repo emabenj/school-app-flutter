@@ -12,13 +12,12 @@ class EditDeletNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = NewsController.instance;
     // CONTAINER ROUNDED GREEN - 124w x 75h
     const crudActions = [Crud.edit, Crud.remove];
     final functions = List.generate(
         crudActions.length,
         (index) => () {
-              controller.statusCrud.value = crudActions[index];
+              NewsController.instance.statusCrud.value = crudActions[index];
               onTap();
             });
     return ContainerIconButtons(

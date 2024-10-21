@@ -18,8 +18,6 @@ class ExtraButtonsGroupContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SelectController.instance;
-
     final sizeButton = forButton ? BSizes.iconButtonLg : BSizes.iconButtonMd;
     final imgs = forButton ? BImages.forClassrooms : BImages.forAClassroom;
     final sizeExtra = BSizes.getSizeContainer(imgs.length, isMd: !forButton);
@@ -30,9 +28,8 @@ class ExtraButtonsGroupContainer extends StatelessWidget {
         imgs.length,
         (index) => () {
               forButton
-                  ?"" 
-                  // print("AULAS")
-                  : controller.setState(directionActions[index]);
+                  ? ""
+                  : SelectController.instance.setState(directionActions[index]);
             });
     return BRoundedContainer(
         backgroundColor: forButton
@@ -46,10 +43,9 @@ class ExtraButtonsGroupContainer extends StatelessWidget {
         size: sizeExtra,
         child: BClickablesWidgets(
             widgets: BIconCircularButtonList(
-                    size: Size(sizeButton, sizeButton),
-                    imgs: imgs,
-                    actions: actions,
-                    enabled: List.generate(imgs.length, (index) => true))
-                .get()));
+                size: Size(sizeButton, sizeButton),
+                imgs: imgs,
+                actions: actions,
+                enabled: List.generate(imgs.length, (index) => true)).get()));
   }
 }

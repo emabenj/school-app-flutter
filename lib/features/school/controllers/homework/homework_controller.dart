@@ -43,7 +43,7 @@ class HomeworkController extends GetxController {
     changeState(Crud.insert);
   }
 
-  // STATE FOR ENABLED
+  // ENABLE STATUS
   final imgsCrudButtons = BImages.crudHomework;
   final buttonsConfirm = Rx<List<bool>>(
       List.generate(BImages.crudHomework.length, (index) => false));

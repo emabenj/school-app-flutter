@@ -10,12 +10,13 @@ import 'package:get/get.dart';
 class AttendanceController extends GetxController {
   static AttendanceController get instance => Get.find();
   final _authRepository = AuthenticationRepository.instance;
+  final _schoolRepository = SchoolRepository.instance;
 
   final classroomId = 0.obs;
 
   Future<void> loadData() async {
     await _authRepository.responseValidatorControllers(() async {
-      final attendanceList = await SchoolRepository.instance
+      final attendanceList = await _schoolRepository
           .getAttendancesByClassroomId(classroomId.value);
       setModels(attendanceList);
     }, titleMessage: "Error al obtener las asistencias", back: true);
@@ -61,7 +62,7 @@ class AttendanceController extends GetxController {
       BFullScreenLoader.openLoadingDialog(
           'Guardando notas...', BImages.loadingAttendance);
       // INFO TO SAVE
-      await SchoolRepository.instance.updateStudentAttendance(models.value);
+      await _schoolRepository.updateStudentAttendance(models.value);
       BFullScreenLoader.stopLoading();
       Get.back();
       BLoaders.successSnackBar(

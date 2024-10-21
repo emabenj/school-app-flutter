@@ -1,5 +1,5 @@
 class UserLoginModel {
-  static String get url => "login";
+  static String get url => "login/";
   final String email;
   final String password;
 

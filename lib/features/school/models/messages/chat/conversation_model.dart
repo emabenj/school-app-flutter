@@ -4,13 +4,13 @@ class ConversationModel {
   final int id;
   final int firstParticipant;
   final int secondParticipant;
-  final DateTime creationDate;
+  final DateTime? creationDate;
 
   ConversationModel(
       {required this.id,
       required this.firstParticipant,
       required this.secondParticipant,
-      required this.creationDate});
+      this.creationDate});
 
   static ConversationModel empty() => ConversationModel(
       id: 0,

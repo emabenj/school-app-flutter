@@ -4,7 +4,7 @@ import 'package:colegio_bnnm/features/school/models/messages/chat/message_model.
 class RecentConversationModel {
   static String get urlList => "conversaciones/";
   final ConversationModel conversation;
-  MessageModel recentMessage;
+  MessageModel? recentMessage;
 
   RecentConversationModel({
     required this.conversation,
@@ -16,21 +16,31 @@ class RecentConversationModel {
   }
 
   String getRecentMessage() {
-    final text = recentMessage.isRight()
-        ? "Tú: ${recentMessage.content}"
-        : recentMessage.content;
-    final totalImgs = recentMessage.imagenes.length;
-    final textWithImg = recentMessage.imagenes.isNotEmpty
-        ? "($totalImgs imagenes) $text "
-        : text;
-    return textWithImg;
+    if (recentMessage != null) {
+      final text = recentMessage!.isRight()
+          ? "Tú: ${recentMessage!.content}"
+          : recentMessage!.content;
+      final totalImgs = recentMessage!.imagenes.length;
+      final textWithImg = recentMessage!.imagenes.isNotEmpty
+          ? "($totalImgs imagenes) $text "
+          : text;
+      return textWithImg;
+    }
+    return "";
   }
 
-  factory RecentConversationModel.fromJson(Map<String, dynamic> json) =>
-      RecentConversationModel(
-        conversation: ConversationModel.fromJson(json["conversacion"]),
-        recentMessage: MessageModel.fromJson(json["mensaje_reciente"]),
-      );
+  String hourInRecentMessage() {
+    return recentMessage != null ? recentMessage!.hourInRecentMessage() : "";
+  }
+
+  factory RecentConversationModel.fromJson(Map<String, dynamic> json) {
+    return RecentConversationModel(
+      conversation: ConversationModel.fromJson(json["conversacion"]),
+      recentMessage: json["mensaje_reciente"] == "No hay mensajes"
+          ? null
+          : MessageModel.fromJson(json["mensaje_reciente"]),
+    );
+  }
 }
 
 class RecentMessageListModel {

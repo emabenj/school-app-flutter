@@ -18,7 +18,7 @@ class RecentListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = SelectChatController.instance;
     final chatController = ChatController.instance;
-  final onlineController = OnlineUserController.instance;
+    final onlineController = OnlineUserController.instance;
     return Obx(
       () => ListView.separated(
           shrinkWrap: true,
@@ -28,6 +28,7 @@ class RecentListContainer extends StatelessWidget {
           itemBuilder: (context, index) => RecentChatItem(
               background: backgroundColor,
               forT: forT,
+              model: chatController.recentChatList[index],
               onTap: () {
                 // BUSCAR id de receptor entre los usuarios
                 final userList =
@@ -53,8 +54,7 @@ class RecentListContainer extends StatelessWidget {
                 onlineController.nameUserChat = receiver.getText();
                 onlineController.onlineUserChat.value = receiver.online;
                 Get.to(() => ChatScreen(forT: forT));
-              },
-              model: chatController.recentChatList[index])),
+              })),
     );
   }
 }

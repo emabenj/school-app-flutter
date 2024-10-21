@@ -44,6 +44,7 @@ class BTexts {
   static const keyRememberPass = "REMEMBER_ME_PASSWORD";
   static const keyRememberToken = "REMEMBER_ME_TOKEN";
   static const keyRememberRole = "REMEMBER_ME_ROLE";
+  static const keyTeacherSending = "TEACHER_SENDING";
 
   // HOME
   static const home = "Inicio";
@@ -151,7 +152,6 @@ class BTexts {
   static const selectLevelS = "Nivel educativo - Secundaria";
 
   // QUALIFICATIONS
-  static const removeQualificationsName = "Pablo Gómez Mendoza";
   static const qualification = "Nota";
   static const finalQualification = "Nota final:";
   static const approved = "Aprobado";
@@ -164,25 +164,14 @@ class BTexts {
   static const homeworkLabelDate = "Fecha de entrega";
   static const homeworkPrevious = "Anteriores";
   static const homeworkRemoveConfirm = "¿Estás seguro de eliminar esta tarea?";
-  static const removeTitleHomework = "Fecha de revisión: 25/05/2024";
-  static const removeDescHomework =
-      "Realizar un mapa conceptual de la célula eucariota.";
-  static const removeTotalHomework = "20/45";
-  static const removeTitleHomework2 = "Por revisar, hasta el 28/05/2024";
-  static const removeDescHomework2 =
-      "Investigar y preparar una exposición en grupo sobre la revolución industrial de 1968";
-  static const removeTotalHomework2 = "13/45";
 
   static const homeworkList = ['Sin calificar', 'En revisión', 'Calificada'];
 
   // ATTENDANCE
-  static const attendanceTime = "La clase termina en ";
-  static const attendanceTimeNumber = "54 minutos";
-  static const attendanceDate = "Fecha: 20/08/2024";
+  static const attendanceTime = "La clase termina en ";// CHANGE
+  static const attendanceTimeNumber = "54 minutos";// CHANGE
+  static const attendanceDate = "Fecha: 20/08/2024";// CHANGE
   static const attendanceSelectAll = "Asistieron todos";
-  static const attended = "Asistencia";
-  static const absent = "Falta";
-  static const isLate = "Tardanza";
   static const attendanceList = [
     'Asistio',
     'Falto',
@@ -192,21 +181,13 @@ class BTexts {
   ];
 
   // MESSAGES-SELECT
-  static const messageTitle1 = "5° 'A'";
-  static const messageTitle2 = "María A. Pérez Cáceres";
   static const messageRecent = "Recientes";
   static const messageButtonSend = "Enviar a varios";
   static const messageButtonSee = "Ver todos";
 
   // MESSAGES-CHAT
-  static const chatName1 = "Jorge Mateo Mendoza Jimenes";
-  static const chatName2 = "Alejandra Jimena Mendoza Pérez";
-  static const chatGrade = "4° 'A'";
-  static const chatCourseName = "Matemática";
   static const chatLabel = "Ingresar mensaje";
   static const chatButton = "Enviar";
   static const online = "En línea";
   static const offline = "Desconectado";
-  static const listMessagesLeft = ["Buenas tardes, profesora"];
-  static const listMessagesRight = ["Buena tarde, señor Jorge"];
 }

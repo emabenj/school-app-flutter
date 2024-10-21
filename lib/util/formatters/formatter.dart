@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 class BFormatter {
   static String formatDateToString(DateTime? date, {bool normal = false}) {
     date ??= DateTime.now();
-    return DateFormat(normal ? "yyyy-MM-dd HH:mm" : "dd-MM-yyyy").format(date);
+    String isoDate = date.toUtc().toIso8601String();
+    return normal ? isoDate : DateFormat("dd-MM-yyyy").format(date);
   }
 
   static DateTime? formatStringToDate(String? dateString) {

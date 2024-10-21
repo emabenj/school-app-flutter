@@ -11,7 +11,8 @@ class RecentChatItem extends StatelessWidget {
       {super.key,
       required this.background,
       required this.onTap,
-      required this.model, required this.forT});
+      required this.model,
+      required this.forT});
   final Color background;
   final void Function() onTap;
   final RecentConversationModel model;
@@ -19,7 +20,6 @@ class RecentChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SelectChatController.instance;
     final id = forT
         ? model.conversation.secondParticipant
         : model.conversation.firstParticipant;
@@ -47,7 +47,7 @@ class RecentChatItem extends StatelessWidget {
                             SizedBox(
                               width: BHelperFunctions.screenWidth() * .63,
                               child: Text(
-                                  controller
+                                  SelectChatController.instance
                                       .getUserToRecentMessage(forT, id)
                                       .getName(),
                                   style:
@@ -63,7 +63,7 @@ class RecentChatItem extends StatelessWidget {
                                       maxLines: 1, softWrap: false)),
                               const SizedBox(width: BSizes.sm),
                               // TIME
-                              Text(model.recentMessage.hourInRecentMessage(),
+                              Text(model.hourInRecentMessage(),
                                   style: Theme.of(context).textTheme.titleLarge)
                             ])
                           ])

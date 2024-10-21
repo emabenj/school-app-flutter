@@ -35,8 +35,7 @@ class _ContainerListState extends State<ContainerList> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.counterSelect.value == 2) {
-        final usersOnline = OnlineUserController.instance.usersOnline;
-        controller.setUsersOnline(usersOnline, widget.forT);
+        controller.setUsersOnline(OnlineUserController.instance.usersOnline, widget.forT);
       }
       return SizedBox(
           height: BHelperFunctions.screenHeight() * .65,
@@ -74,7 +73,7 @@ class _ContainerListState extends State<ContainerList> {
           final attendanceController = Get.put(AttendanceController());
           // ESTABLECER el id del aula en el Screen de Asistencia
           attendanceController.classroomId.value =
-              controller.listClassrooms[index].id;
+              controller.listClassrooms[index].classroom.id;
           controller.counterSelect.value = 2;
           Get.to(() => const AttendanceScreen());
         } else if (controller.selectQualifications()) {
@@ -93,7 +92,7 @@ class _ContainerListState extends State<ContainerList> {
           //
           // INSTANCE CONTROLLER
           final homeworkController = Get.put(HomeworkController());
-          homeworkController.classroomId = controller.listClassrooms[index].id;
+          homeworkController.classroomId = controller.listClassrooms[index].classroom.id;
           homeworkController.studentsTotal =
               controller.listClassrooms[index].students.length;
           Get.to(() => const HomeworkScreen());
@@ -103,9 +102,10 @@ class _ContainerListState extends State<ContainerList> {
           final messagesController = Get.put(SelectChatController());
           messagesController.setStatus(MessagesStatus.selecting);
           final classroomSelected = controller.listClassrooms[index];
-          messagesController.extraInfo = classroomSelected.getRoom();
-          final groupId = classroomSelected.id;
-          messagesController.groupId = groupId;
+          messagesController.extraInfo = classroomSelected.classroom.getRoom();
+          final roomId = classroomSelected.classroom.id;
+          messagesController.roomId = roomId;
+          // messagesController.roomId = groupId;
           messagesController.loadData(classroomSelected.students);
           Get.to(() => SelectChatScreen(forT: widget.forT));
         } else if (controller.selectMessageToTeachers()) {
@@ -114,9 +114,10 @@ class _ContainerListState extends State<ContainerList> {
           final messagesController = Get.put(SelectChatController());
           messagesController.setStatus(MessagesStatus.teachersList);
           final studentSelected = controller.listStudents[index];
+          final roomId = studentSelected.classroom.id;
+          messagesController.roomId = roomId;
+          // messagesController.roomId = roomId;
           messagesController.extraInfo = studentSelected.reducedName();
-          final groupId = studentSelected.id;
-          messagesController.groupId = groupId;
           messagesController.loadData(studentSelected.teachers);
           Get.to(() => SelectChatScreen(forT: widget.forT));
         }
